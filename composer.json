@@ -1,5 +1,5 @@
 {
-    "name": "pelmered/filament-money-field",
+    "name": "ericsts/filament-money-field",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -26,11 +26,11 @@
     "require": {
         "php": "^8.2",
         "ext-intl": "*",
-        "filament/support": "^v4.0.0",
-        "moneyphp/money": "^4.0",
-        "illuminate/support": "^11.24 | ^12",
-        "php-static-analysis/attributes": "^0.3.1 | ^0.4.0",
-        "pelmered/larapara": "dev-main"
+        "pelmered/larapara": "dev-main",
+        "illuminate/support": "*",
+        "filament/support": "^4.0",
+        "php-static-analysis/attributes": "^0.4.1",
+        "moneyphp/money": "^4.7"
     },
     "require-dev": {
         "filament/filament": "^4.0",
