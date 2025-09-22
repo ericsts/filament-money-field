@@ -2,10 +2,11 @@
 
 namespace Pelmered\FilamentMoneyField\Forms\Components;
 
+use Filament\Schemas\Schema;
+use InvalidArgumentException;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Support\RawJs;
 use Illuminate\Database\Eloquent\Model;
 use Money\Money;
@@ -38,14 +39,14 @@ class MoneyInput extends TextInput
                 return Action::make('changeCurrency')
                     ->icon('heroicon-m-arrow-path')
                     ->tooltip('Change currency')
-                    ->form([
+                    ->schema([
                         Select::make('currency')
                             ->label('Currency')
                             ->options($currencies->toSelectArray())
                             ->required()
                             ->live(),
                     ])
-                    ->action(function (array $data, MoneyInput $component, Model $record, Form $form): void {
+                    ->action(function (array $data, MoneyInput $component, Model $record, Schema $schema): void {
                         $money    = $record->{$component->name};
                         $currency = $data['currency'];
 
@@ -106,7 +107,7 @@ class MoneyInput extends TextInput
         };
 
         if (config('filament-money-field.use_input_mask')) {
-            $this->mask(function (MoneyInput $component): \Filament\Support\RawJs {
+            $this->mask(function (MoneyInput $component): RawJs {
                 $formattingRules = MoneyFormatter::getFormattingRules(
                     $component->getLocale(),
                     $component->getCurrency()
@@ -138,7 +139,7 @@ class MoneyInput extends TextInput
         }
 
         if (! in_array($placement, CurrencySymbolPlacement::values())) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Currency symbol placement must be one of: '.implode(', ', CurrencySymbolPlacement::values())
             );
         }
